@@ -1,0 +1,18 @@
+[package]
+name = "ndcopy-bench"
+version = "0.1.0"
+edition = "2018"
+
+[profile.bench]
+lto = "thin"
+
+[dependencies.ndcopy]
+path = ".."
+
+[dev-dependencies]
+criterion = "0.3"
+
+[[bench]]
+name = "bench"
+harness = false
+path = "src/bench.rs"

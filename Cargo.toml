@@ -1,0 +1,7 @@
+[package]
+name = "ndcopy"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies.ndshape]
+git = "https://github.com/bonsairobo/ndshape-rs"
