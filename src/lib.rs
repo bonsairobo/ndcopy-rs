@@ -106,6 +106,59 @@ fn test_copy2() {
     }
 }
 
+/// Fill a 2-dimensional extent of `dst` with `value`.
+///
+/// - `fill_shape`: Dimensions of the extent to be copied.
+/// - `value`: The value to write.
+/// - `dst`: The destination slice.
+/// - `dst_shape`: A `Shape<u32, 2>` for the entire `dst` slice.
+/// - `dst_start`: The starting 2D offset to copy into `dst`.
+#[inline]
+pub fn fill2<T, Dst>(
+    fill_shape: [u32; 2],
+    value: T,
+    dst: &mut [T],
+    dst_shape: &Dst,
+    dst_start: [u32; 2],
+) where
+    T: Clone,
+    Dst: Shape<u32, 2>,
+{
+    let row_length = fill_shape[0];
+
+    let mut dst_y = dst_start[1];
+    for _ in 0..fill_shape[1] {
+        let dst_row_start = dst_shape.linearize([dst_start[0], dst_y]) as usize;
+        let dst_row_end = dst_row_start + row_length as usize;
+
+        dst[dst_row_start..dst_row_end].fill(value.clone());
+
+        dst_y += 1;
+    }
+}
+
+#[test]
+fn test_fill2() {
+    use ndshape::ConstShape2u32;
+
+    let dst_shape = ConstShape2u32::<11, 12>;
+    const DST_SIZE: usize = 11 * 12;
+    let mut dst = [0; DST_SIZE];
+
+    fill2([2, 3], 1, &mut dst, &dst_shape, [4, 5]);
+
+    for y in 5..5 + 3 {
+        for x in 4..4 + 2 {
+            let i = dst_shape.linearize([x, y]) as usize;
+            assert_eq!(1, dst[i]);
+            dst[i] = 0;
+        }
+    }
+    for i in 0..DST_SIZE {
+        assert_eq!(dst[i], 0);
+    }
+}
+
 /// Copy 3-dimensional data from `src` to `dst`.
 ///
 /// - `copy_shape`: Dimensions of the extent to be copied.
@@ -174,6 +227,65 @@ fn test_copy3() {
         &dst_shape,
         [4, 5, 6],
     );
+
+    for z in 6..6 + 4 {
+        for y in 5..5 + 3 {
+            for x in 4..4 + 2 {
+                let i = dst_shape.linearize([x, y, z]) as usize;
+                assert_eq!(1, dst[i]);
+                dst[i] = 0;
+            }
+        }
+    }
+    for i in 0..DST_SIZE {
+        assert_eq!(dst[i], 0);
+    }
+}
+
+/// Fill a 3-dimensional extent of `dst` with `value`.
+///
+/// - `fill_shape`: Dimensions of the extent to be copied.
+/// - `value`: The value to write.
+/// - `dst`: The destination slice.
+/// - `dst_shape`: A `Shape<u32, 3>` for the entire `dst` slice.
+/// - `dst_start`: The starting 3D offset to copy into `dst`.
+#[inline]
+pub fn fill3<T, Dst>(
+    fill_shape: [u32; 3],
+    value: T,
+    dst: &mut [T],
+    dst_shape: &Dst,
+    dst_start: [u32; 3],
+) where
+    T: Clone,
+    Dst: Shape<u32, 3>,
+{
+    let row_length = fill_shape[0];
+
+    let mut dst_z = dst_start[2];
+    for _ in 0..fill_shape[2] {
+        let mut dst_y = dst_start[1];
+        for _ in 0..fill_shape[1] {
+            let dst_row_start = dst_shape.linearize([dst_start[0], dst_y, dst_z]) as usize;
+            let dst_row_end = dst_row_start + row_length as usize;
+
+            dst[dst_row_start..dst_row_end].fill(value.clone());
+
+            dst_y += 1;
+        }
+        dst_z += 1;
+    }
+}
+
+#[test]
+fn test_fill3() {
+    use ndshape::ConstShape3u32;
+
+    let dst_shape = ConstShape3u32::<11, 12, 13>;
+    const DST_SIZE: usize = 11 * 12 * 13;
+    let mut dst = [0; DST_SIZE];
+
+    fill3([2, 3, 4], 1, &mut dst, &dst_shape, [4, 5, 6]);
 
     for z in 6..6 + 4 {
         for y in 5..5 + 3 {
@@ -265,6 +377,72 @@ fn test_copy4() {
         &dst_shape,
         [4, 5, 6, 7],
     );
+
+    for w in 7..7 + 5 {
+        for z in 6..6 + 4 {
+            for y in 5..5 + 3 {
+                for x in 4..4 + 2 {
+                    let i = dst_shape.linearize([x, y, z, w]) as usize;
+                    assert_eq!(1, dst[i]);
+                    dst[i] = 0;
+                }
+            }
+        }
+    }
+    for i in 0..DST_SIZE {
+        assert_eq!(dst[i], 0);
+    }
+}
+
+/// Fill a 4-dimensional extent of `dst` with `value`.
+///
+/// - `fill_shape`: Dimensions of the extent to be copied.
+/// - `value`: The value to write.
+/// - `dst`: The destination slice.
+/// - `dst_shape`: A `Shape<u32, 4>` for the entire `dst` slice.
+/// - `dst_start`: The starting 4D offset to copy into `dst`.
+#[inline]
+pub fn fill4<T, Dst>(
+    fill_shape: [u32; 4],
+    value: T,
+    dst: &mut [T],
+    dst_shape: &Dst,
+    dst_start: [u32; 4],
+) where
+    T: Clone,
+    Dst: Shape<u32, 4>,
+{
+    let row_length = fill_shape[0];
+
+    let mut dst_w = dst_start[3];
+    for _ in 0..fill_shape[3] {
+        let mut dst_z = dst_start[2];
+        for _ in 0..fill_shape[2] {
+            let mut dst_y = dst_start[1];
+            for _ in 0..fill_shape[1] {
+                let dst_row_start =
+                    dst_shape.linearize([dst_start[0], dst_y, dst_z, dst_w]) as usize;
+                let dst_row_end = dst_row_start + row_length as usize;
+
+                dst[dst_row_start..dst_row_end].fill(value.clone());
+
+                dst_y += 1;
+            }
+            dst_z += 1;
+        }
+        dst_w += 1;
+    }
+}
+
+#[test]
+fn test_fill4() {
+    use ndshape::ConstShape4u32;
+
+    let dst_shape = ConstShape4u32::<11, 12, 13, 14>;
+    const DST_SIZE: usize = 11 * 12 * 13 * 14;
+    let mut dst = [0; DST_SIZE];
+
+    fill4([2, 3, 4, 5], 1, &mut dst, &dst_shape, [4, 5, 6, 7]);
 
     for w in 7..7 + 5 {
         for z in 6..6 + 4 {
