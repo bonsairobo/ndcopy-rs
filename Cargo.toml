@@ -7,5 +7,6 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/bonsairobo/ndcopy-rs"
 keywords = ["array", "tensor"]
 
-[dependencies]
-ndshape = "0.2"
+[dependencies.ndshape]
+git = "https://github.com/bonsairobo/ndshape-rs"
+rev = "d184932"
