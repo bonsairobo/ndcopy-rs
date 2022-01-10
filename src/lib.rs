@@ -36,10 +36,10 @@ use ndshape::Shape;
 ///
 /// - `copy_shape`: Dimensions of the extent to be copied.
 /// - `src`: The source slice.
-/// - `src_shape`: A `Shape<u32, 2>` for the entire `src` slice.
+/// - `src_shape`: A `Shape<2, Coord=u32>` for the entire `src` slice.
 /// - `src_start`: The starting 2D offset to copy from `src`.
 /// - `dst`: The destination slice.
-/// - `dst_shape`: A `Shape<u32, 2>` for the entire `dst` slice.
+/// - `dst_shape`: A `Shape<2, Coord=u32>` for the entire `dst` slice.
 /// - `dst_start`: The starting 2D offset to copy into `dst`.
 #[inline]
 pub fn copy2<T, Src, Dst>(
@@ -52,8 +52,8 @@ pub fn copy2<T, Src, Dst>(
     dst_start: [u32; 2],
 ) where
     T: Clone,
-    Src: Shape<u32, 2>,
-    Dst: Shape<u32, 2>,
+    Src: Shape<2, Coord=u32>,
+    Dst: Shape<2, Coord=u32>,
 {
     let row_length = copy_shape[0];
 
@@ -111,7 +111,7 @@ fn test_copy2() {
 /// - `fill_shape`: Dimensions of the extent to be copied.
 /// - `value`: The value to write.
 /// - `dst`: The destination slice.
-/// - `dst_shape`: A `Shape<u32, 2>` for the entire `dst` slice.
+/// - `dst_shape`: A `Shape<2, Coord=u32>` for the entire `dst` slice.
 /// - `dst_start`: The starting 2D offset to copy into `dst`.
 #[inline]
 pub fn fill2<T, Dst>(
@@ -122,7 +122,7 @@ pub fn fill2<T, Dst>(
     dst_start: [u32; 2],
 ) where
     T: Clone,
-    Dst: Shape<u32, 2>,
+    Dst: Shape<2, Coord=u32>,
 {
     let row_length = fill_shape[0];
 
@@ -163,10 +163,10 @@ fn test_fill2() {
 ///
 /// - `copy_shape`: Dimensions of the extent to be copied.
 /// - `src`: The source slice.
-/// - `src_shape`: A `Shape<u32, 3>` for the entire `src` slice.
+/// - `src_shape`: A `Shape<3, Coord=u32>` for the entire `src` slice.
 /// - `src_start`: The starting 3D offset to copy from `src`.
 /// - `dst`: The destination slice.
-/// - `dst_shape`: A `Shape<u32, 3>` for the entire `dst` slice.
+/// - `dst_shape`: A `Shape<3, Coord=u32>` for the entire `dst` slice.
 /// - `dst_start`: The starting 3D offset to copy into `dst`.
 #[inline]
 pub fn copy3<T, Src, Dst>(
@@ -179,8 +179,8 @@ pub fn copy3<T, Src, Dst>(
     dst_start: [u32; 3],
 ) where
     T: Clone,
-    Src: Shape<u32, 3>,
-    Dst: Shape<u32, 3>,
+    Src: Shape<3, Coord=u32>,
+    Dst: Shape<3, Coord=u32>,
 {
     let row_length = copy_shape[0];
 
@@ -247,7 +247,7 @@ fn test_copy3() {
 /// - `fill_shape`: Dimensions of the extent to be copied.
 /// - `value`: The value to write.
 /// - `dst`: The destination slice.
-/// - `dst_shape`: A `Shape<u32, 3>` for the entire `dst` slice.
+/// - `dst_shape`: A `Shape<3, Coord=u32>` for the entire `dst` slice.
 /// - `dst_start`: The starting 3D offset to copy into `dst`.
 #[inline]
 pub fn fill3<T, Dst>(
@@ -258,7 +258,7 @@ pub fn fill3<T, Dst>(
     dst_start: [u32; 3],
 ) where
     T: Clone,
-    Dst: Shape<u32, 3>,
+    Dst: Shape<3, Coord=u32>,
 {
     let row_length = fill_shape[0];
 
@@ -305,10 +305,10 @@ fn test_fill3() {
 ///
 /// - `copy_shape`: Dimensions of the extent to be copied.
 /// - `src`: The source slice.
-/// - `src_shape`: A `Shape<u32, 4>` for the entire `src` slice.
+/// - `src_shape`: A `Shape<4, Coord=u32>` for the entire `src` slice.
 /// - `src_start`: The starting 4D offset to copy from `src`.
 /// - `dst`: The destination slice.
-/// - `dst_shape`: A `Shape<u32, 4>` for the entire `dst` slice.
+/// - `dst_shape`: A `Shape<4, Coord=u32>` for the entire `dst` slice.
 /// - `dst_start`: The starting 4D offset to copy into `dst`.
 #[inline]
 pub fn copy4<T, Src, Dst>(
@@ -321,8 +321,8 @@ pub fn copy4<T, Src, Dst>(
     dst_start: [u32; 4],
 ) where
     T: Clone,
-    Src: Shape<u32, 4>,
-    Dst: Shape<u32, 4>,
+    Src: Shape<4, Coord=u32>,
+    Dst: Shape<4, Coord=u32>,
 {
     let row_length = copy_shape[0];
 
@@ -399,7 +399,7 @@ fn test_copy4() {
 /// - `fill_shape`: Dimensions of the extent to be copied.
 /// - `value`: The value to write.
 /// - `dst`: The destination slice.
-/// - `dst_shape`: A `Shape<u32, 4>` for the entire `dst` slice.
+/// - `dst_shape`: A `Shape<4, Coord=u32>` for the entire `dst` slice.
 /// - `dst_start`: The starting 4D offset to copy into `dst`.
 #[inline]
 pub fn fill4<T, Dst>(
@@ -410,7 +410,7 @@ pub fn fill4<T, Dst>(
     dst_start: [u32; 4],
 ) where
     T: Clone,
-    Dst: Shape<u32, 4>,
+    Dst: Shape<4, Coord=u32>,
 {
     let row_length = fill_shape[0];
 
