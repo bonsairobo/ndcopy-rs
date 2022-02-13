@@ -8,4 +8,4 @@ repository = "https://github.com/bonsairobo/ndcopy-rs"
 keywords = ["array", "tensor"]
 
 [dependencies]
-ndshape = "0.2"
+ndshape = "0.3"
